@@ -1,0 +1,73 @@
+{
+  "name": "minecraft-spigot",
+  "display": "Minecraft - Spigot",
+  "type": "minecraft-java",
+  "install": [
+    {
+      "files": [
+        "https://download.getbukkit.org/spigot/spigot-${version}.jar"
+      ],
+      "type": "download"
+    },
+    {
+      "target": "eula.txt",
+      "text": "eula=true",
+      "type": "writefile"
+    },
+    {
+      "target": "server.properties",
+      "text": "server-ip=0.0.0.0\nserver-port=${port}",
+      "type": "writefile"
+    },
+    {
+      "source": "spigot-*.jar",
+      "target": "server.jar",
+      "type": "move"
+    }
+  ],
+  "run": {
+    "stop": "stop",
+    "command": "java -Xmx${memory}M -Djline.terminal=jline.UnsupportedTerminal -Dlog4j2.formatMsgNoLookups=true -jar server.jar nogui",
+    "workingDirectory": "",
+    "pre": [],
+    "post": [],
+    "environmentVars": {}
+  },
+  "data": {
+    "memory": {
+      "type": "integer",
+      "desc": "How much memory in MB to allocate to the Java Heap",
+      "display": "Memory (MB)",
+      "required": true,
+      "value": "4096"
+    },
+    "port": {
+      "type": "integer",
+      "desc": "What port to bind the server to. <span style='color: red;'>DON'T USE FOR BUNGEECORD!</span>",
+      "display": "Port",
+      "required": true,
+      "value": "25569"
+    },
+    "version": {
+      "type": "string",
+      "desc": "Version of Minecraft to install (<a href='https://www.spigotmc.org/wiki/buildtools/#versions'>Supported versions</a>)",
+      "display": "Version",
+      "required": true,
+      "value": "1.19.2"
+    }
+  },
+  "environment": {
+    "type": "standard"
+  },
+  "supportedEnvironments": [
+    {
+      "type": "standard"
+    }
+  ],
+  "requirements": {
+    "binaries": [
+      "java",
+      "git"
+    ]
+  }
+}
