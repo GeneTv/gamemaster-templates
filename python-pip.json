@@ -1,0 +1,50 @@
+{
+  "name": "python-pip",
+  "display": "Python 3 with PyPI",
+  "type": "programming-language",
+  "install": [
+    {
+      "commands": [
+        "python3 -m pip install -r ${req-txt-file}"
+      ],
+      "type": "command"
+    }
+  ],
+  "run": {
+    "stop": "stop",
+    "command": "python3 ${entry-file}",
+    "workingDirectory": "",
+    "pre": [],
+    "post": [],
+    "environmentVars": {}
+  },
+  "data": {
+    "entry-file": {
+      "type": "string",
+      "desc": "The python entry file.",
+      "display": "Main file",
+      "required": true,
+      "value": "main.py"
+    },
+    "req-txt-file": {
+      "type": "string",
+      "desc": "The python requirements file.",
+      "display": "Requirements file",
+      "required": true,
+      "value": "requirements.txt"
+    }
+  },
+  "environment": {
+    "type": "standard"
+  },
+  "supportedEnvironments": [
+    {
+      "type": "standard"
+    }
+  ],
+  "requirements": {
+    "binaries": [
+      "python3"
+    ]
+  }
+}
