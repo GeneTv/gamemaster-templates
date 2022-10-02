@@ -1,0 +1,62 @@
+{
+  "name": "minecraft-bungeecord",
+  "display": "Minecraft - Bungeecord",
+  "type": "minecraft-java",
+  "install": [
+    {
+      "files": [
+        "http://ci.md-5.net/job/BungeeCord/lastSuccessfulBuild/artifact/bootstrap/target/BungeeCord.jar"
+      ],
+      "type": "download"
+    },
+    {
+      "target": "config.yml",
+      "text": "listeners:\n- query_port: ${port}\n  host: 0.0.0.0:${port}\n  motd: '${motd}'\n",
+      "type": "writefile"
+    }
+  ],
+  "run": {
+    "stop": "end",
+    "command": "java -Xmx${memory}M -Xms${memory}M -Dlog4j2.formatMsgNoLookups=true -jar BungeeCord.jar",
+    "workingDirectory": "",
+    "pre": [],
+    "post": [],
+    "environmentVars": {}
+  },
+  "data": {
+    "memory": {
+      "type": "integer",
+      "desc": "How much memory in MB to allocate to the BungeeCord server. It is generally recommended to allocated 512MB RAM for every 500 players. Please keep in mind that additional plugins may impact the amount needed in your case.",
+      "display": "Memory (MB)",
+      "required": true,
+      "value": "512"
+    },
+    "motd": {
+      "type": "string",
+      "desc": "This is the message that is displayed in the server list of the client, below the name. The MOTD does support <a href='https://minecraft.gamepedia.com/Formatting_codes' target='_blank'>color and formatting codes</a>.",
+      "display": "MOTD message of the day",
+      "required": true,
+      "value": "A BungeeCord Server"
+    },
+    "port": {
+      "type": "integer",
+      "desc": "What port to bind the server to",
+      "display": "Port",
+      "required": true,
+      "value": "25565"
+    }
+  },
+  "environment": {
+    "type": "standard"
+  },
+  "supportedEnvironments": [
+    {
+      "type": "standard"
+    }
+  ],
+  "requirements": {
+    "binaries": [
+      "java"
+    ]
+  }
+}
