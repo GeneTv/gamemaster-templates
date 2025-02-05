@@ -1,0 +1,88 @@
+{
+  "name": "minecraft-paper",
+  "display": "Paper - NOT USABLE YET",
+  "type": "Minecraft",
+  "install": [
+    {
+      "type": "javadl",
+      "version": "${java-version}"
+    },
+    {
+      "commands": [
+        "curl -s \"https://api.papermc.io/v2/projects/paper/versions/${game-version}\" | jq -r '.builds[-1]' | xargs -I {} curl -o paper.jar \"https://api.papermc.io/v2/projects/paper/versions/${game-version}/builds/{}/downloads/paper-${game-version}-{}.jar\""
+      ],
+      "type": "command"
+    },
+    {
+      "target": "eula.txt",
+      "text": "eula=true",
+      "type": "writefile"
+    },
+    {
+      "target": "server.properties",
+      "text": "server-port=${server-port}\n",
+      "type": "writefile"
+    }
+  ],
+  "run": {
+    "stop": "",
+    "command": "java${java-version} -Xmx${memory-alloc}M -Dterminal.jline=false -Dterminal.ansi=true -Djline.terminal=jline.UnsupportedTerminal -Dlog4j2.formatMsgNoLookups=true -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true -jar paper.jar nogui",
+    "workingDirectory": "",
+    "pre": [],
+    "post": [],
+    "environmentVars": {}
+  },
+  "data": {
+    "game-version": {
+      "type": "string",
+      "desc": "Version of Minecraft to install (<a href='https://papermc.io/downloads/paper'>Paper maintained versions</a>)",
+      "display": "MINECRAFT VERSION",
+      "required": true,
+      "value": "1.21.4"
+    },
+    "java-version": {
+      "type": "option",
+      "desc": "<span style=\"color:red;\">Java 21: MC 1.20.5+</span> | <span style=\"color:green;\">Java 17: MC 1.17 - 1.20.4</span> | Java 8: older game versions",
+      "display": "JAVA VERSION",
+      "required": true,
+      "value": "21",
+      "options": [
+        {
+          "value": "21",
+          "display": "Java 21"
+        },
+        {
+          "value": "17",
+          "display": "Java 17"
+        },
+        {
+          "value": "8",
+          "display": "Java 8"
+        }
+      ]
+    },
+    "memory-alloc": {
+      "type": "integer",
+      "desc": "How much ram the server should reserve",
+      "display": "MEMORY [MB]",
+      "required": true,
+      "value": "1024"
+    },
+    "server-port": {
+      "type": "integer",
+      "desc": "Use a random port above 25000",
+      "display": "PORT",
+      "required": true,
+      "value": "25565"
+    }
+  },
+  "environment": {
+    "type": "standard"
+  },
+  "supportedEnvironments": [
+    {
+      "type": "standard"
+    }
+  ],
+  "requirements": {}
+}
