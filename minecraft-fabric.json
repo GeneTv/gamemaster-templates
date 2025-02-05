@@ -30,6 +30,12 @@
     {
       "target": "mods",
       "type": "mkdir"
+    },
+    {
+      "type": "command",
+      "commands": [
+        "rm fabric-installer.jar"
+      ]
     }
   ],
   "run": {
