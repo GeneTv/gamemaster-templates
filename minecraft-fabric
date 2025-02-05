@@ -1,0 +1,96 @@
+{
+  "name": "minecraft-fabric",
+  "display": "Fabric",
+  "type": "Minecraft",
+  "install": [
+    {
+      "type": "javadl",
+      "version": "${java-version}"
+    },
+    {
+      "targetFile": "fabric-installer.jar",
+      "type": "fabricdl"
+    },
+    {
+      "commands": [
+        "java${java-version} -jar fabric-installer.jar server -mcversion ${game-version} -downloadMinecraft -noprofile"
+      ],
+      "type": "command"
+    },
+    {
+      "target": "eula.txt",
+      "text": "eula=true",
+      "type": "writefile"
+    },
+    {
+      "target": "server.properties",
+      "text": "server-port=${server-port}",
+      "type": "writefile"
+    },
+    {
+      "target": "mods",
+      "type": "mkdir"
+    }
+  ],
+  "run": {
+    "stop": "",
+    "command": "java${java-version} -Xmx${memory-alloc}M -Dlog4j2.formatMsgNoLookups=true -jar fabric-server-launch.jar nogui",
+    "workingDirectory": "",
+    "pre": [],
+    "post": [],
+    "environmentVars": {}
+  },
+  "data": {
+    "game-version": {
+      "type": "string",
+      "desc": "Version of Minecraft to install (lowest is 1.14)",
+      "display": "GAME VERSION",
+      "required": true,
+      "value": "1.21.4"
+    },
+    "java-version": {
+      "type": "option",
+      "desc": "<span style=\"color:red;\">Java 21: MC 1.20.5+</span> | <span style=\"color:green;\">Java 17: MC 1.17 - 1.20.4</span> | Java 8: older game versions",
+      "display": "JAVA VERSION",
+      "required": true,
+      "value": "21",
+      "options": [
+        {
+          "value": "21",
+          "display": "Java 21"
+        },
+        {
+          "value": "17",
+          "display": "Java 17"
+        },
+        {
+          "value": "8",
+          "display": "Java 8"
+        }
+      ]
+    },
+    "memory-alloc": {
+      "type": "integer",
+      "desc": "How much ram the server should reserve",
+      "display": "MEMORY [MB]",
+      "required": true,
+      "value": "1024"
+    },
+    "server-port": {
+      "type": "string",
+      "desc": "Use a random port above 25000",
+      "display": "PORT",
+      "required": true,
+      "value": "25565"
+    }
+  },
+  "environment": {
+    "type": "standard"
+  },
+  "supportedEnvironments": [
+    {
+      "type": "standard"
+    }
+  ],
+  "requirements": {}
+}
